@@ -1,0 +1,72 @@
+{% extends "/vistas/base.html" %}
+
+{% block titulo %}
+Editar
+{% endblock %}
+
+{% block header %}
+EDITAR 
+{% endblock %}
+{% block producto %}
+{{ producto[2] }}
+{% endblock %}
+
+{% block main %}
+
+
+<form name="formulario" action="/update" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="txtId_producto" id="txtId_producto" value="{{producto[0]}}">
+    <div>
+        <label for="txtNombre">Nombre: </label>
+        <input value=" {{ producto[2] }} " type="text" name="txtNombre" id="txtNombre">
+    </div><br>
+    <div>
+        <label for="txtId_categoria">Categoria: </label>
+        <select onchange="nueva_categoria(this.form)" name="txtId_categoria" id="txtId_categoria">
+            {% for categoria in categorias %}
+            <option value="{{categoria[0]}}">{{categoria[1]}}</option>
+            {% endfor %}
+            <option value="" id="nueva"> Nueva categoria</option>
+        </select>
+    </div><br>
+    <span id="categoria" style="display: none">
+        <div>
+            <label for="txtCategoria">Nueva categoria: </label>
+            <input value="" type="text" name="txtCategoria" id="txtCategoria">
+        </div><br>
+        <div>
+            <label for="txtDescripcion_c">Descripcion de la categoria: </label>
+            <input value="" type="text" name="txtDescripcion_c" id="txtDescripcion_c">
+        </div><br>
+    </span>
+    <div>
+        <label for="txtFoto">Foto: </label>
+        <input value="{{producto[9]}}" type="file" name="txtFoto" id="txtFoto">
+    </div><br>
+    <div>
+        <label for="txtDescripcion_p">Descripcion del producto: </label>
+        <input value="{{producto[3]}}" type="text" name="txtDescripcion_p" id="txtDescripcion_p">
+    </div><br>
+    <div>
+        <label for="txtPrecio">Precio: </label>
+        <input value="{{producto[4]}}" type="text" name="txtPrecio" id="txtPrecio">
+    </div><br>
+    <div>
+        <label for="txtCosto_envio">Costo de envio: </label>
+        <input value="{{producto[5]}}" type="text" name="txtCosto_envio" id="txtCosto_envio">
+    </div><br>
+    <div>
+        <label for="txtLargo">Largo(cm): </label>
+        <input value="{{producto[6]}}" type="text" name="txtLargo" id="txtLargo">
+    </div><br>
+    <div>
+        <label for="txtAlto">Alto(cm): </label>
+        <input value="{{producto[7]}}" type="text" name="txtAlto" id="txtAlto">
+    </div><br>
+    <div>
+        <label for="txtAncho">Ancho(cm): </label>
+        <input value="{{producto[8]}}" type="text" name="txtAncho" id="txtAncho">
+    </div><br>
+    <input type="submit" value="Enviar">
+</form>
+{% endblock %}

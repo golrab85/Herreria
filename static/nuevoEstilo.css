@@ -1,0 +1,96 @@
+*{
+    margin: 0cm;
+    padding: 0px;
+    font-family: sans-serif, arial;
+}
+
+input, textarea{
+    border-radius: 7px;
+}
+body{
+    background-color: #d4f46e;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='%23a775f7' fill-opacity='0.4'%3E%3Cpath d='M12 0h18v6h6v6h6v18h-6v6h-6v6H12v-6H6v-6H0V12h6V6h6V0zm12 6h-6v6h-6v6H6v6h6v6h6v6h6v-6h6v-6h6v-6h-6v-6h-6V6zm-6 12h6v6h-6v-6zm24 24h6v6h-6v-6z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+}
+body h1{font-size: 4vw}
+main a{
+    color: rgba(22, 3, 66, 0.836);
+    font-size: 1.5vw;
+}
+
+header { 
+    background-image: url(img/campo.jpg);
+    height: 200px;
+    min-width: 100%;
+    background-size: 100%;
+    aspect-ratio: 4;
+    text-align: center;
+    color:#aad0e8;
+    text-decoration-line: underline;
+    font-size: 3VW;
+    font-family: 'inconsolata';
+}
+footer{margin:0 30%; font-size: 0.8vw;bottom: 0%;position: absolute}
+footer h3{text-align: center;}
+span button{
+    margin: 1vw;
+    padding: 0.25vw 0.5VW;
+    border-radius: 2vw;
+    font-size: 2VW;
+    text-align: center;
+    transition-duration: 1.5s;
+    background: #2BF927;
+    color: #000;
+}
+
+span button:hover{
+    background-color: #000;
+    color: #2BF927;
+}
+
+.nav2 button{
+    margin: 0 20%;
+    padding: 0.1vw 0.3VW;
+
+    border-radius: 2vw;
+    font-size: 1.5VW;
+    text-align: center;
+    transition-duration: 1s;
+    background: #ffa500;
+    color: #000;
+}
+
+.nav2 button:hover{
+    background: #000;
+    color:#ffa500 ;
+}
+
+#abierta button{
+    background-color: crimson;
+    color: cyan;
+}
+.contenedor p{font-size: 1.5vw;text-align: center;}
+p{
+    font-family: 'monserrat';
+    color: rgb(77, 4, 70);
+    font-size: 2vw;
+}
+p span{
+    background-color: #d4f46e;
+}
+
+@keyframes cambiarColor {
+   0% { background: hsl(60, 100%, 0%); color:hsl(60, 100%, 25%)}
+   50% { background: hsl(60, 100%, 35%); color:hsl(60, 100%, 0%)}
+   100% { background: hsl(60, 100%, 0%); color:hsl(60, 100%, 25%)}
+}
+
+
+.contenedor {
+    display: grid;
+    grid-auto-flow: row;
+    grid-auto-rows: auto;
+}
+.linea{
+    height: .1vw;
+  background-color: black;
+}

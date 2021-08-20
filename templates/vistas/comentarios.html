@@ -1,0 +1,123 @@
+{% extends "/vistas/base.html" %}
+
+{% block titulo %}comentarios{% endblock %}
+{% block head %}
+<script>
+    function desplegar(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}
+{% block header %}
+COMENTARIOS
+{% endblock %}
+
+
+{% block main %}
+<div class="formularios">
+    <div class="recetas">
+        <button onclick="desplegar('receta')" class="btn-comentarios">
+            Compartí tu receta
+        </button>
+        <div class="form1" id="receta" style="display: none;">
+            <form action="/cargaReceta" method="POST">
+                <div class="">
+                    <label for="email">E-mail:</label><br>
+                    <input type="email" name="email" id="email" placeholder="juanperez@gmail.com" required>
+                </div><br>
+                <div class="">
+                    <label for="name">Nombre:</label><br>
+                    <input type="text" name="nombre" id="name" placeholder="Juan Pérez" required>
+                </div><br>
+                <div class="">
+                    <label for="nombre_receta">Nombre de la receta:</label><br>
+                    <input type="text" name="nombre_receta" id="nombre_receta" placeholder="Chorizos a la portuguesa"
+                        required>
+                </div><br>
+                <div class="">
+                    <label for="porciones">Cantidad estimada de porciones:</label><br>
+                    <input type="number" name="porciones" id="porciones"
+                        placeholder="escriba en números las porciones estimadas" required min="1">
+                </div> <br>
+                <div class="">
+                    <label for="ingredientes">Ingredientes:</label><br>
+                    <textarea name="ingredientes" id="ingredientes" cols="30" rows="10"
+                        placeholder="Introduzca aquí los ingredientes y cantidades" required></textarea>
+                </div><br>
+                <div class="">
+                    <label for="receta">Receta:</label><br>
+                    <textarea name="receta" id="receta" cols="30" rows="10" placeholder="Introduzca aquí su receta"
+                        required></textarea>
+                </div><br>
+                <div class="">
+                    <input type="submit" value="Enviar">
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <div class="comentarios">
+        <button onclick="desplegar('opinion')" class="btn-comentarios">
+            Tu opinión nos interesa
+        </button>
+        <div class="form2" id="opinion" style="display: none;">
+            <form action="/cargaCalificacion" method="POST">
+                <div class="">
+                    <label for="email">E-mail:</label><br>
+                    <input type="email" name="email" id="email" placeholder="juanperez@gmail.com" required>
+                </div><br>
+                <div class="">
+                    <label for="name">Nombre:</label><br>
+                    <input type="text" name="nombre" id="name" placeholder="Juan Pérez" required>
+                </div><br><br>
+                <div>
+                    
+                    <h3>Como nos calificarías en las <br> siguientes características</h3>
+                    
+                        <div>
+                            <label for="atencion">ATENCIÓN</label><br>
+                            <input type="radio" name="atención" id="atencion" value="1">1
+                            <input type="radio" name="atención" id="atencion" value="2">2
+                            <input type="radio" name="atención" id="atencion" value="3">3
+                            <input type="radio" name="atención" id="atencion" value="4">4
+                            <input type="radio" name="atención" id="atencion" value="5">5
+                        </div><br><br>
+                        <div>
+                            <label for="calidad">CALIDAD</label><br>
+                            <input type="radio" name="calidad" id="calidad" value="1">1
+                            <input type="radio" name="calidad" id="calidad" value="2">2
+                            <input type="radio" name="calidad" id="calidad" value="3">3
+                            <input type="radio" name="calidad" id="calidad" value="4">4
+                            <input type="radio" name="calidad" id="calidad" value="5">5
+                        </div><br><br>
+                        <div>
+                            <label for="precio">PRECIO</label><br>
+                            <input type="radio" name="precio" id="precio" value="1">1
+                            <input type="radio" name="precio" id="precio" value="2">2
+                            <input type="radio" name="precio" id="precio" value="3">3
+                            <input type="radio" name="precio" id="precio" value="4">4
+                            <input type="radio" name="precio" id="precio" value="5">5
+                        </div>
+                </div><br><br>
+                    <div>
+                        <label for="comentario">COMENTARIOS:</label><br>
+                        <textarea name="comentario" id="comentario" placeholder="Agrega un comentario que quieras hacer"
+                            cols="30" rows="8"></textarea>
+                    </div><br><br>
+                    <div class="form-group">
+                        <input type="submit" value="Enviar">
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
