@@ -7,6 +7,14 @@ from flask import send_from_directory #Acceso a las carpetas
 validacion=False # Bandera de usuario registrado
 usuario="" # Nombre de usuario
 
+def estrellas(valor):
+    puntaje=[]
+    i=0
+    while i < valor:
+        puntaje+="*"
+        i+=1
+    return puntaje
+
 
 app = Flask(__name__) # Inicialización de aplicación
 app.secret_key="18980413Guille"
@@ -26,7 +34,7 @@ cursor.execute("CREATE DATABASE IF NOT EXISTS `herreria`;")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`categorias` ( `id_categoria` INT(10) NOT NULL AUTO_INCREMENT , `categoria` VARCHAR(255) NOT NULL , `descripcion_c` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id_categoria`))")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`productos` ( `id_producto` INT(10) NOT NULL AUTO_INCREMENT , `id_categoria` INT(10) NOT NULL  , `nombre` VARCHAR(255) NOT NULL , `descripcion_p` VARCHAR(5000) NOT NULL , `precio` FLOAT NOT NULL , `costo_envio` FLOAT NOT NULL , `largo` FLOAT NOT NULL , `alto` FLOAT NOT NULL , `ancho` FLOAT NOT NULL , `foto` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id_producto`) );")
 cursor.execute("INSERT IGNORE `herreria`.`usuarios`(`Usuario`,`password`) VALUES ('guillermo', '123456789');")
-cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`recetas` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) NOT NULL , `nombre` VARCHAR(50) NOT NULL , `nombreReceta` VARCHAR(50) NOT NULL , `porciones` INT(5) NOT NULL , `ingredientes` VARCHAR(5000) NOT NULL , `receta` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id`))")
+cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`recetas` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `nombre` VARCHAR(50) NOT NULL , `nombreReceta` VARCHAR(50) NOT NULL , `porciones` INT(5) NOT NULL , `ingredientes` VARCHAR(5000) NOT NULL , `receta` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id`))")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`comentarios` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) NOT NULL , `nombre` VARCHAR(50) NOT NULL , `atencion` INT(2) NOT NULL , `calidad` INT(2) NOT NULL , `precio` INT(2) NOT NULL , `comentario` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id`))")
 conn.commit()
 
@@ -69,18 +77,32 @@ def ubicacion():
 
 @app.route('/comentarios')
 def comentarios():
-   return render_template("vistas/comentarios.html")
+    conn = mysql.connect() # Realiza la conexión mysql.init_app(app)
+    cursor = conn.cursor() # Almacenaremos lo que ejecutamos
+    cursor.execute("SELECT * FROM `herreria`.`recetas`;")
+    recetas=cursor.fetchall()
+    cursor.execute("SELECT * FROM `herreria`.`comentarios`;")
+    cali=cursor.fetchall()
+    calificaciones=list(cali)
+    for calificacion in calificaciones:
+        calificacion=list(calificacion)
+    for calificacion in calificaciones:
+        calificacion[3]=estrellas(calificacion[3])
+        calificacion[4]=estrellas(calificacion[4])
+        calificacion[5]=estrellas(calificacion[5])
+        print(calificacion[3])
+    print(len(cali),len(calificaciones), calificaciones )
+    return render_template("vistas/comentarios.html",recetas=recetas,calificaciones=calificaciones)
 
 @app.route('/cargaReceta')
 def carga_receta():
-   email=request.form['email']
    nombre=request.form['nombre']
    nombreReceta=request.form['nombre_receta']
    porciones=(request.form['porciones'])
    ingredientes=request.form['ingredientes']
    receta=request.form['receta']
-   datos= (email, nombre, nombreReceta, porciones, ingredientes, receta)
-   sql="INSERT INTO `herreria`.`recetas`(`email`,`nombre`,`nombreReceta`,`porciones`,`ingredientes`,`receta`) VALUES(%s,%s,%s,%s,%s,%s)"
+   datos= (nombre, nombreReceta, porciones, ingredientes, receta)
+   sql="INSERT INTO `herreria`.`recetas`(`nombre`,`nombreReceta`,`porciones`,`ingredientes`,`receta`) VALUES(%s,%s,%s,%s,%s)"
    conn =mysql.connect()
    cursor = conn.cursor()
    cursor.execute(sql,datos)
@@ -312,6 +334,5 @@ def uploads(nombreFoto):
 
 if __name__=="__main__":
     app.run(debug=True, host="192.168.100.3", port=5001)
-
 
 

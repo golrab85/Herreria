@@ -27,10 +27,6 @@ COMENTARIOS
         <div class="form1" id="receta" style="display: none;">
             <form action="/cargaReceta" method="POST">
                 <div class="">
-                    <label for="email">E-mail:</label><br>
-                    <input type="email" name="email" id="email" placeholder="juanperez@gmail.com" required>
-                </div><br>
-                <div class="">
                     <label for="name">Nombre:</label><br>
                     <input type="text" name="nombre" id="name" placeholder="Juan Pérez" required>
                 </div><br>
@@ -79,45 +75,93 @@ COMENTARIOS
                     <input type="text" name="nombre" id="name" placeholder="Juan Pérez" required>
                 </div><br><br>
                 <div>
-                    
+
                     <h3>Como nos calificarías en las <br> siguientes características</h3>
-                    
-                        <div>
-                            <label for="atencion">ATENCIÓN</label><br>
-                            <input type="radio" name="atención" id="atencion" value="1">1
-                            <input type="radio" name="atención" id="atencion" value="2">2
-                            <input type="radio" name="atención" id="atencion" value="3">3
-                            <input type="radio" name="atención" id="atencion" value="4">4
-                            <input type="radio" name="atención" id="atencion" value="5">5
-                        </div><br><br>
-                        <div>
-                            <label for="calidad">CALIDAD</label><br>
-                            <input type="radio" name="calidad" id="calidad" value="1">1
-                            <input type="radio" name="calidad" id="calidad" value="2">2
-                            <input type="radio" name="calidad" id="calidad" value="3">3
-                            <input type="radio" name="calidad" id="calidad" value="4">4
-                            <input type="radio" name="calidad" id="calidad" value="5">5
-                        </div><br><br>
-                        <div>
-                            <label for="precio">PRECIO</label><br>
-                            <input type="radio" name="precio" id="precio" value="1">1
-                            <input type="radio" name="precio" id="precio" value="2">2
-                            <input type="radio" name="precio" id="precio" value="3">3
-                            <input type="radio" name="precio" id="precio" value="4">4
-                            <input type="radio" name="precio" id="precio" value="5">5
-                        </div>
-                </div><br><br>
+
                     <div>
-                        <label for="comentario">COMENTARIOS:</label><br>
-                        <textarea name="comentario" id="comentario" placeholder="Agrega un comentario que quieras hacer"
-                            cols="30" rows="8"></textarea>
+                        <label for="atencion">ATENCIÓN</label><br>
+                        <input type="radio" name="atención" id="atencion" value="1">1
+                        <input type="radio" name="atención" id="atencion" value="2">2
+                        <input type="radio" name="atención" id="atencion" value="3">3
+                        <input type="radio" name="atención" id="atencion" value="4">4
+                        <input type="radio" name="atención" id="atencion" value="5">5
                     </div><br><br>
-                    <div class="form-group">
-                        <input type="submit" value="Enviar">
+                    <div>
+                        <label for="calidad">CALIDAD</label><br>
+                        <input type="radio" name="calidad" id="calidad" value="1">1
+                        <input type="radio" name="calidad" id="calidad" value="2">2
+                        <input type="radio" name="calidad" id="calidad" value="3">3
+                        <input type="radio" name="calidad" id="calidad" value="4">4
+                        <input type="radio" name="calidad" id="calidad" value="5">5
+                    </div><br><br>
+                    <div>
+                        <label for="precio">PRECIO</label><br>
+                        <input type="radio" name="precio" id="precio" value="1">1
+                        <input type="radio" name="precio" id="precio" value="2">2
+                        <input type="radio" name="precio" id="precio" value="3">3
+                        <input type="radio" name="precio" id="precio" value="4">4
+                        <input type="radio" name="precio" id="precio" value="5">5
                     </div>
-                
+                </div><br><br>
+                <div>
+                    <label for="comentario">COMENTARIOS:</label><br>
+                    <textarea name="comentario" id="comentario" placeholder="Agrega un comentario que quieras hacer"
+                        cols="30" rows="8"></textarea>
+                </div><br><br>
+                <div class="form-group">
+                    <input type="submit" value="Enviar">
+                </div>
+
             </form>
         </div>
     </div>
 </div>
+<div>
+    <table>
+        <thead>
+            <td style="display: none;">Id</td>
+            <td>Nombre</td>
+            <td>Receta</td>
+            <td>Porciones</td>
+            <td>Ingredientes</td>
+            <td>Preparación</td>
+        </thead>
+        <tbody>
+            {% for receta in recetas %}
+            <td style="display: none;">{{receta[0]}}</td>
+            <td>{{receta[1]}}</td>
+            <td>{{receta[2]}}</td>
+            <td>{{receta[3]}}</td>
+            <td>{{receta[4]}}</td>
+            <td>{{receta[5]}}</td>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <thead>
+            <td>Nombre</td>
+            <td>Atención</td>
+            <td>Calidad</td>
+            <td>Precio</td>
+            <td>Comentario</td>
+        </thead>
+        <tbody>
+            {% for calificacion in calificaciones %}
+            <tr>
+                <td>{{calificacion[2] }}</td>
+                <td> {% for i in range(1,{{calificacion[3] }}) %}
+                i=i+1
+                
+                {% endfor %}                         </td>
+                <td>{{calificacion[4] }}</td>
+                <td>{{calificacion[5] }}</td>
+                <td>{{calificacion[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
