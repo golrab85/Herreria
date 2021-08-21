@@ -8,10 +8,10 @@ validacion=False # Bandera de usuario registrado
 usuario="" # Nombre de usuario
 
 def estrellas(valor):
-    puntaje=[]
+    puntaje=""
     i=0
     while i < valor:
-        puntaje+="*"
+        puntaje=puntaje+"*"
         i+=1
     return puntaje
 
@@ -83,9 +83,9 @@ def comentarios():
     recetas=cursor.fetchall()
     cursor.execute("SELECT * FROM `herreria`.`comentarios`;")
     cali=cursor.fetchall()
-    calificaciones=list(cali)
-    for calificacion in calificaciones:
-        calificacion=list(calificacion)
+    calificaciones=[]
+    for i in cali:
+        calificaciones.append(list(i))
     for calificacion in calificaciones:
         calificacion[3]=estrellas(calificacion[3])
         calificacion[4]=estrellas(calificacion[4])

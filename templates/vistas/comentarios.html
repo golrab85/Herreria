@@ -151,10 +151,7 @@ COMENTARIOS
             {% for calificacion in calificaciones %}
             <tr>
                 <td>{{calificacion[2] }}</td>
-                <td> {% for i in range(1,{{calificacion[3] }}) %}
-                i=i+1
-                
-                {% endfor %}                         </td>
+                <td>{{calificacion[3] }}</td>
                 <td>{{calificacion[4] }}</td>
                 <td>{{calificacion[5] }}</td>
                 <td>{{calificacion[6] }}</td>
