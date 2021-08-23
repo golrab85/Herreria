@@ -1,24 +1,17 @@
 *{
-    margin: 0cm;
+    margin: 0px;
     padding: 0px;
     font-family: sans-serif, arial;
     text-align: center;
 }
 
-body{
-    background-image: url("/static/img/background.jpg");
-    background-blend-mode: color-burn;
-    background-color: #f18d8d;
-    min-height: 100%;
-    position: relative;
-}
 
-header { 
+header{ 
     background-image: url(img/campo.jpg);
     background-size: 100%;
     aspect-ratio: 4.5;
     color:#aad0e8;
-    font-size: 3VW;
+    font-size: 2.5rem;
     font-family: 'inconsolata';
 }
 
@@ -26,6 +19,19 @@ header h1{
     text-decoration-line: underline;
 }
 
+.header2{
+    text-align: left;
+    margin-left: -40%;
+    margin-top: 1.6rem;
+    color: gold;
+}
+body{
+    background-image: url("/static/img/background.jpg");
+    background-blend-mode: color-burn;
+    background-color: #f18d8d;
+    min-height: 100%;
+    position: relative;
+}
 #whatsapp{
     color: #00bb2d;
 }
@@ -35,10 +41,10 @@ header h1{
 }
 
 button{
-    margin: 1vw;
-    padding: 0.25vw 0.5VW;
-    border-radius: 2vw;
-    font-size: 2VW;
+    margin: .85rem;
+    padding: 0.21rem 0.5rem;
+    border-radius: 1.6rem;
+    font-size: 1.6rem;
     text-align: center;
     transition-duration: 1.5s;
     background: #2BF927;
@@ -51,10 +57,10 @@ button:hover{
 }
 
 .btn-comentarios, select,[type=file] button {
-    margin: .5vw;
-    padding: 0.1vw 0.3VW;
-    border-radius: 2vw;
-    font-size: 1.5VW;
+    margin: .5rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 1.6rem;
+    font-size: 1.2rem;
     text-align: center;
     transition-duration: 1s;
     background: #ffa500;
@@ -70,16 +76,16 @@ p{
     font-family: 'monserrat';
     color: rgb(46, 2, 42);
     font-size: 1rem;
-    padding: 4vw;
+    padding: 3,4rem;
 }
 
 .diseño{
     position: relative;
     bottom: 0px;
     background-color: rgb(97, 93, 93);
-    font-size: 2vw;
+    font-size: 1.4rem;
     color: rgb(138, 204, 241);
-    padding: 3vw;
+    padding: 2.5rem;
     max-width: 100%;
     text-align: center;
 }
@@ -104,8 +110,8 @@ footer a{
 
 table{
     margin: auto;
-    margin-top: 3vw;
-    padding: 2vw;
+    margin-top: 2.5rem;
+    padding: 1.6rem;
     border-style: double;
     border-color: black;
     width: 90%;
@@ -116,36 +122,35 @@ table{
 th{
     border: black double;
     border-width: 1px ;
-    font-size: 2vw;
+    font-size: 1.6rem;
 }
 
 td{
     border: black solid;
     border-width: 1px ;
-    padding: .8vw;
-    font-size: 1.5vw;
+    padding: .7rem;
+    font-size: 1.4rem;
 }
 
 .filtro{
     font-size: 1.5vw;
     font-weight: 600;
-    margin-top: 2vw;
-    /* margin-bottom: -1vw; */
+    margin-top: 1.6rem;
 }
 
 .mapa{
-    margin: 5vw;
+    margin: 4.2rem;
 }
 #lista{
     align-items: center;
 }
 li{
     list-style: inside square;
-    font-size: 1.3vw;
+    font-size: 1.1rem;
     background-color: #ffa500;
-    width: 15vw;
+    width: 13rem;
     text-align: left;
-    padding: 1vw;
+    padding: .8rem;
 }
 li a{
     color: black;
@@ -154,7 +159,7 @@ li a{
 .formularios{
     display: grid;
     grid-template-columns: 1fr,1fr;
-    margin-bottom: 3vw;
+    margin-bottom: 2.5rem;
     font-size: 1.5rem;
 }
 
@@ -168,31 +173,23 @@ li a{
 input, textarea{
     border-radius: 7px;
     font-size: 1.3rem;
-    max-width: 40vw;
+    max-width: 34rem;
 }
 
-.header2{
-    text-align: left;
-    /* text-decoration: none; */
-    margin-left: 25%;
-    margin-top: 2vw;
-    color: gold;
-}
 
 form div{
     border: black dotted 2px;
-    /* background-color: blue; */
     max-width: auto;
     display: inline-block;
     margin-block: 3px;
     border-radius: 10px;
-    padding: 0vw;
+    padding: 0rem;
     font-size: 1.5rem;
     vertical-align: middle;
 }
 
 .estrella{
-    width: 1.5vw;
+    width: 1rem;
 }
 #cerrar{
     background-color: firebrick;
@@ -200,4 +197,34 @@ form div{
 }
 [type="submit"]{
     background-color: rgb(131, 187, 240);
+}
+
+
+@media only screen and (max-width: 700px){
+
+    table, tr, td, th{
+        font-size: .6rem;
+    }
+
+    
+    h1{
+        font-size: 2.3rem;
+    }
+
+p{
+    font-size: 1.1rem;
+}
+.estrella{
+    width: .8rem;
+}
+.header2{
+    margin-left:20%;
+
+}
+.header2 div{
+    font-size: 1.2rem;
+    display: inline;
+    vertical-align: top;
+
+}
 }
