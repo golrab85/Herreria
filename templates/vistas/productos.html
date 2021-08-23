@@ -1,56 +1,45 @@
 {% extends "/vistas/base.html" %}
 
 {% block titulo %}Nuestros productos{% endblock %}
-{% block head %}
-<script>
-    function desplegar(y) {
-        var x = document.getElementById(y);
-        if (x.style.display === "none") {
-            x.style.display = "inline-block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>
-{% endblock %}
+
 {% block header %}NUESTROS PRODUCTOS{% endblock %}
 
 {% block main %}
-<button onclick="desplegar('lista')" class="btn-comentarios">Filtrar por:</button>
+<button onclick='desplegar("lista", "inline-block")' class="btn-comentarios">Filtrar por:</button>
 <br>
-        <span id="lista" style="display: none">
-            <ul>
-                <li><a href="/productos/0">TODOS LOS PRODUCTOS</a></li>
-                {% for categoria in categorias %}
-                <li><a href="/productos/{{categoria[0]}}">{{categoria[1]}}</a></li>
-                {% endfor %}
-            </ul>
-        </span>
-        <table class="table table-light" >
-            <thead>
-                <div class="filtro">Categoria: {{titulo}}</div>
-                <tr>
-                    <th>Foto</th>
-                    <th>Nombre</th>
-                    <th>Descripcion</th>
-                    <th>Precio</th>
-                    <th>Costo del envio</th>
-                    <th>Medidas del paquete</th>
-                    <th>Categoria</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for producto in productos %}
-                <tr>
-                    <td><a href="/fotos/{{producto[9]}}" target="popup"
-                        onclick='window.open("/fotos/{{producto[9]}}","popup","width=600,height=600")''><img width="150px" src="/fotos/{{producto[9]}}" alt="2"></a> </td>
-                        <td> {{producto[2]}} </td>
-                        <td> {{producto[3]}} </td>
-                        <td> {{producto[4]}} </td>
-                        <td> {{producto[5]}} </td>
-                        <td> {{producto[6]}}cm X {{producto[7]}}cm X {{producto[8]}}cm</td>
-                        <td> {{producto[11]}} </td>
-                    </tr>
+<span id="lista" style="display: none">
+    <ul>
+        <li><a href="/productos/0">TODOS LOS PRODUCTOS</a></li>
+        {% for categoria in categorias %}
+        <li><a href="/productos/{{categoria[0]}}">{{categoria[1]}}</a></li>
+        {% endfor %}
+    </ul>
+</span>
+<table class="table table-light">
+    <thead>
+        <div class="filtro">Categoria: {{titulo}}</div>
+        {{descripcion_c}}
+        <tr>
+            <th>Foto</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+            <th>Categoria</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for producto in productos %}
+        <tr>
+            <td>
+                <a href="/fotos/{{producto[5]}}" target="popup"
+                    onclick='window.open("/fotos/{{producto[5]}}","popup","width=600,height=600")''><img width="100px" src="/fotos/{{producto[5]}}" alt="2">
+                </a>
+            </td>
+            <td> {{producto[2]}} </td>
+            <td> {{producto[3]}} </td>
+            <td>{{producto[4]}}</td>
+            <td> {{producto[7]}} </td>
+        </tr>
                     {% endfor %}
                 </tbody>
             </table>

@@ -2,13 +2,14 @@
 <html lang="es">
 
 <head>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="/static/img/disco.ico">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block titulo %}
         {% endblock %}</title>
-    <link rel="icon" type="image/vnd.microsoft.icon" href="../Discos_de_arado/disco.ico">
     <script src="https://kit.fontawesome.com/d01d968878.js" crossorigin="anonymous"></script>
+    <script src="/static/herreria.js"> </script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2? family = Inconsolata: wght @ 600 & family = Montserrat & display = swap "
@@ -24,25 +25,34 @@
             {% block header %}
             {% endblock %}
         </h1>
+        <div class="header2" >
+            {% block header2 %}
+            {% endblock %}
+        </div>
         {% block producto %}
         {% endblock %}
     </header>
     <Nav class="nav1">
-        <span class="b" id="abierta">
-            <a href="/" tabindex="-1"><button>INICIO</button></a>
+        <span">
+            <a href="/" ><button>INICIO</button></a>
         </span>
 
         <span class="b">
-            <a href="/productos/0" tabindex="-1"> <button>PRODUCTOS</button></a>
+            <a href="/productos/0" > <button>PRODUCTOS</button></a>
         </span>
 
         <span class="b">
-            <a href="/ubicacion" tabindex="-1"><button> UBICACIÓN</button></a>
+            <a href="/ubicacion" ><button> UBICACIÓN</button></a>
         </span>
 
         <span class="b">
-            <a href="/comentarios" tabindex="-1"><button> COMENTARIOS</button></a>
+            <a href="/comentarios" ><button> COMENTARIOS</button></a>
         </span>
+        {% if "username" in session %}
+        <span>
+            <a href="/logout"><button id="cerrar">Cerrar sesión</button></a>
+        </span>
+        {% endif %}
     </Nav>
     <hr class="linea">
     <main>{% block main %}
@@ -50,12 +60,12 @@
         <div class="contribucion">
             <a href="https://www.freepik.es/vectores/fondo">Vector de Fondo creado por Creative_hat - www.freepik.es</a>
         </div>
+        <div class="contribucion">Iconos diseñados por <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
     <footer>
-        <h1>Contacto: </h1>| <a href="https://api.whatsapp.com/send?phone=+5491156429074">
-            <i id="whatsapp" class="fab fa-whatsapp-square fa-2x"></i> Envíenos un mensaje de WhatsApp </a> ||||
+        <h1>Contacto: </h1>|<br> <a href="https://api.whatsapp.com/send?phone=+5491156429074">
+            <i id="whatsapp" class="fab fa-whatsapp-square fa-2x"></i> Envíenos un mensaje de WhatsApp </a><br>
         <a href="https://www.facebook.com/discos.arados">
-            <i id="facebook" class="fab fa-facebook-square fa-2x"></i>
-            Encuéntrenos en FACEBOOK</a>
+            <i id="facebook" class="fab fa-facebook-square fa-2x"></i>Encuéntrenos en FACEBOOK</a>
     </footer>
     <div class="diseño">
         <h3>Diseño:

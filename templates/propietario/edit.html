@@ -23,8 +23,11 @@ EDITAR
     <div>
         <label for="txtId_categoria">Categoria: </label>
         <select onchange="nueva_categoria(this.form)" name="txtId_categoria" id="txtId_categoria">
+            <option selected value="{{producto[1]}}">{{producto[7]}}</option>
             {% for categoria in categorias %}
+            {% if categoria[0] !=producto[1] %}
             <option value="{{categoria[0]}}">{{categoria[1]}}</option>
+            {% endif %}
             {% endfor %}
             <option value="" id="nueva"> Nueva categoria</option>
         </select>
@@ -50,22 +53,6 @@ EDITAR
     <div>
         <label for="txtPrecio">Precio: </label>
         <input value="{{producto[4]}}" type="text" name="txtPrecio" id="txtPrecio">
-    </div><br>
-    <div>
-        <label for="txtCosto_envio">Costo de envio: </label>
-        <input value="{{producto[5]}}" type="text" name="txtCosto_envio" id="txtCosto_envio">
-    </div><br>
-    <div>
-        <label for="txtLargo">Largo(cm): </label>
-        <input value="{{producto[6]}}" type="text" name="txtLargo" id="txtLargo">
-    </div><br>
-    <div>
-        <label for="txtAlto">Alto(cm): </label>
-        <input value="{{producto[7]}}" type="text" name="txtAlto" id="txtAlto">
-    </div><br>
-    <div>
-        <label for="txtAncho">Ancho(cm): </label>
-        <input value="{{producto[8]}}" type="text" name="txtAncho" id="txtAncho">
     </div><br>
     <input type="submit" value="Enviar">
 </form>

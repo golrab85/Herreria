@@ -32,8 +32,8 @@ conn = mysql.connect()
 cursor = conn.cursor()
 cursor.execute("CREATE DATABASE IF NOT EXISTS `herreria`;")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`categorias` ( `id_categoria` INT(10) NOT NULL AUTO_INCREMENT , `categoria` VARCHAR(255) NOT NULL , `descripcion_c` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id_categoria`))")
-cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`productos` ( `id_producto` INT(10) NOT NULL AUTO_INCREMENT , `id_categoria` INT(10) NOT NULL  , `nombre` VARCHAR(255) NOT NULL , `descripcion_p` VARCHAR(5000) NOT NULL , `foto` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id_producto`) );")
-cursor.execute("INSERT IGNORE `herreria`.`usuarios`(`Usuario`,`password`) VALUES ('admin', 'admin');")
+cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`productos` ( `id_producto` INT(10) NOT NULL AUTO_INCREMENT , `id_categoria` INT(10) NOT NULL  , `nombre` VARCHAR(255) NOT NULL , `descripcion_p` VARCHAR(5000) NOT NULL , `precio` FLOAT NOT NULL , `costo_envio` FLOAT NOT NULL , `largo` FLOAT NOT NULL , `alto` FLOAT NOT NULL , `ancho` FLOAT NOT NULL , `foto` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id_producto`) );")
+cursor.execute("INSERT IGNORE `herreria`.`usuarios`(`Usuario`,`password`) VALUES ('guillermo', '123456789');")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`recetas` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `nombre` VARCHAR(50) NOT NULL , `nombreReceta` VARCHAR(50) NOT NULL , `porciones` INT(5) NOT NULL , `ingredientes` VARCHAR(5000) NOT NULL , `receta` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id`))")
 cursor.execute("CREATE TABLE IF NOT EXISTS `herreria`.`comentarios` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) NOT NULL , `nombre` VARCHAR(50) NOT NULL , `atencion` INT(2) NOT NULL , `calidad` INT(2) NOT NULL , `precio` INT(2) NOT NULL , `comentario` VARCHAR(5000) NOT NULL , PRIMARY KEY (`id`))")
 conn.commit()
@@ -58,7 +58,6 @@ def productos(id_categoria):
     cursor.execute("SELECT * FROM `herreria`.`categorias`") # Buscar todas las categorías de la tabla "categorías"
     categorias=cursor.fetchall() # Guardar los datos obtenidos de la tabla "categorías"
     titulo=""
-    descripcion_c=""
     if id_categoria==0: # Si no hay categoría seleccionada
         cursor.execute("SELECT * FROM `herreria`.`productos`, `herreria`.`categorias` WHERE`categorias`.`id_categoria`=`productos`.`id_categoria`ORDER BY nombre;") # Buscar todos los productos de la tabla "productos"
         titulo="TODOS LOS PRODUCTOS"
@@ -68,10 +67,9 @@ def productos(id_categoria):
         for categoria in categorias:
             if categoria[0]==id_categoria:
                 titulo=categoria[1].upper()
-                descripcion_c=categoria[2]
     productos=cursor.fetchall() # Guardar los productos extraidos de la tabla "productos"
     conn.commit() # Cerrar conexión
-    return render_template("vistas/productos.html", productos=productos, categorias=categorias, titulo=titulo, descripcion_c=descripcion_c) # Renderizar productos.html con la información obtenida
+    return render_template("vistas/productos.html", productos=productos, categorias=categorias, titulo=titulo) # Renderizar productos.html con la información obtenida
 
 @app.route('/ubicacion')
 def ubicacion():
@@ -92,6 +90,8 @@ def comentarios():
         calificacion[3]=estrellas(calificacion[3])
         calificacion[4]=estrellas(calificacion[4])
         calificacion[5]=estrellas(calificacion[5])
+        print(calificacion[3])
+    print(len(cali),len(calificaciones), calificaciones )
     return render_template("vistas/comentarios.html",recetas=recetas,calificaciones=calificaciones)
 
 @app.route('/cargaReceta')
@@ -151,15 +151,12 @@ def edit(id):
     if "username" in session: # Si es usuario registrado
         conn = mysql.connect() # Realiza la conexión mysql.init_app(app)
         cursor = conn.cursor() # Almacenaremos lo que ejecutamos
-        cursor.execute("SELECT * FROM `herreria`.`productos`, `herreria`.`categorias` WHERE id_producto=%s AND `categorias`.`id_categoria`=`productos`.`id_categoria`", (id)) # Buscamos el producto de la DB por su id
-        producto=list(cursor.fetchone()) # Traemos toda la información
+        cursor.execute("SELECT * FROM `herreria`.`productos` WHERE id_producto=%s", (id)) # Buscamos el producto de la DB por su id
+        producto=cursor.fetchall() # Traemos toda la información
         cursor.execute("SELECT * FROM `herreria`.`categorias`;") # Buscar todas las categorías de la tabla "categorías"
         categorias=cursor.fetchall() # Almacenamos lo que ejecutamos
         conn.commit() #Cerramos la conexión
-        print("-------------------------------------")
-        print(producto)
-        print("-------------------------------------")
-        return render_template('propietario/edit.html', producto=producto,categorias=categorias) # Renderizar edit.html con la información obtenida
+        return render_template('propietario/edit.html', producto=producto[0],categorias=categorias) # Renderizar edit.html con la información obtenida
     else: # Si NO es usuario registrado
         return redirect('/') # Redireccionamos a Inicio
 
@@ -168,27 +165,18 @@ def edit(id):
 def update():
     if "username" in session: # Si es usuario registrado
         # Obtenemos los datos correspondientes y los almacenamos
-        _nombre=request.form['txtNombre'].capitalize()
+        _nombre=request.form['txtNombre']
         _id_categoria=request.form['txtId_categoria']
-        _descripcion_p=request.form['txtDescripcion_p'].capitalize()
+        _costo_envio=request.form['txtCosto_envio']
+        _largo=request.form['txtLargo']
+        _alto=request.form['txtAlto']
+        _ancho=request.form['txtAncho']
+        _descripcion_p=request.form['txtDescripcion_p']
         _precio=request.form['txtPrecio']
         _id_producto=request.form['txtId_producto']
         _foto=request.files['txtFoto']
-        _categoria=request.form['txtCategoria'].upper()
-        _descripcion_c=request.form["txtDescripcion_c"].capitalize()
-        if _categoria !="": # Si el campo categoria no esta vacío
-            conn=mysql.connect() # Realizamos la conexión con la DB
-            cursor=conn.cursor()
-            sql="INSERT INTO `herreria`.`categorias` (`id_categoria`,`categoria`,`descripcion_c`) VALUES (NULL,%s,%s)" # Definimos la creación de la nueva categoria
-            datos=(_categoria,_descripcion_c) # Definimos los datos de la nueva categoria
-            cursor.execute(sql,datos) # Ejecutamos la creación
-            cursor.execute("SELECT id_categoria FROM `herreria`.`categorias` WHERE categoria=%s",(_categoria)) # Buscamos el ID de categoria de la nueva categoria
-            _id_categoria=cursor.fetchall() # Asignamos ese valor a la variable correspondiente para el nuevo producto
-            conn.commit() # Cerramos la conexión
-
-
-        sql = "UPDATE `herreria`.`productos` SET `nombre`=%s , `id_categoria`=%s , `descripcion_p`=%s ,`precio`=%s  WHERE id_producto=%s;" # Definimos la actualización del producto
-        datos=(_nombre, _id_categoria, _descripcion_p,_precio, _id_producto) # Definimos los nuevos valores del producto
+        sql = "UPDATE `herreria`.`productos` SET `nombre`=%s , `id_categoria`=%s , `costo_envio`=%s , `largo`=%s , `alto`=%s , `ancho`=%s , `descripcion_p`=%s ,`precio`=%s  WHERE id_producto=%s;" # Definimos la actualización del producto
+        datos=(_nombre, _id_categoria, _costo_envio, _largo, _alto, _ancho, _descripcion_p,_precio, _id_producto) # Definimos los nuevos valores del producto
         conn = mysql.connect() # Se conecta a la conexión mysql.init_app(app)
         now= datetime.now() # Obtenemos la fecha y la hora actuales, para definir el nombre de la foto, y evitar repetir este
         tiempo= now.strftime("%Y%H%M%S_") #dia mes horas minutos y segundos
@@ -201,8 +189,8 @@ def update():
             _foto.save("fotos/"+nuevoNombreFoto) # Guardamos la foto nueva
             os.remove(os.path.join(app.config['CARPETA'], fila[0][0])) # Borramos la foto vieja
             data=(nuevoNombreFoto, _id_producto) # Definimos los valores a actualizar
-            cursor.execute("UPDATE `herreria`.`productos` SET `foto`=%s WHERE id_producto=%s", data) # Actualizamos la foto del producto
-        cursor.execute(sql,datos) # Actualizamos los datos del producto
+            cursor.execute("UPDATE `herreria`.`productos` SET `foto`=%s WHERE id_producto=%s", data) # Definimos la sentencia para actualizar la foto
+        cursor.execute(sql,datos) # Actualizamos la foto del producto
         conn.commit() #Cerramos la conexión
         return redirect('/administracion')  # Volvemos a la pagina de administración de DB
     else:  # Si NO es usuario registrado
@@ -227,13 +215,17 @@ def administracion():
 @app.route('/store', methods=['POST']) # Recibimos los datos desde el formulario
 def storage():
     if "username" in session: # Si es usuario registrado
-        _nombre=request.form["txtNombre"].capitalize()
+        _nombre=request.form["txtNombre"].title()
         _id_categoria=int(request.form["txtId_categoria"])
         _foto=request.files["txtFoto"]
-        _descripcion_p=request.form["txtDescripcion_p"].capitalize()
+        _descripcion_p=request.form["txtDescripcion_p"]
         _precio=float(request.form["txtPrecio"])
+        _costo_envio=float(request.form["txtCosto_envio"])
+        _largo=float(request.form["txtLargo"])
+        _alto=float(request.form["txtAlto"])
+        _ancho=float(request.form["txtAncho"])
         _categoria=request.form["txtCategoria"].upper()
-        _descripcion_c=request.form["txtDescripcion_c"].capitalize()
+        _descripcion_c=request.form["txtDescripcion_c"]
 
         if _categoria !="": # Si el campo categoria no esta vacío
             conn=mysql.connect() # Realizamos la conexión con la DB
@@ -245,7 +237,7 @@ def storage():
             _id_categoria=cursor.fetchall() # Asignamos ese valor a la variable correspondiente para el nuevo producto
             conn.commit() # Cerramos la conexión
 
-        if _nombre=="" or _id_categoria=="" or _foto.filename=="" or _descripcion_p=="" or _precio=="": # Si alguno de los campos esta vacío
+        if _nombre=="" or _id_categoria=="" or _foto.filename=="" or _descripcion_p=="" or _precio=="" or _costo_envio=="" or _largo=="" or _alto=="" or _ancho=="": # Si alguno de los campos esta vacío
             flash("Debe rellenar todos los campos") # Creamos el mensaje para el propietario
             return redirect(url_for('administracion')) # Redirigimos a la pagina
         now=datetime.now() # Obtenemos la fecha para asignarla al nombre de la foto
@@ -255,8 +247,8 @@ def storage():
             nuevoNombreFoto=tiempo+_nombre+"."+extension[1] # Creamos el nombre de la foto
             _foto.save("fotos/"+nuevoNombreFoto) # Guardamos la foto en la carpeta correspondiente
 
-        datos=(_nombre,_id_categoria,_descripcion_p,_precio , nuevoNombreFoto) # Definimos los valores del producto
-        sql="INSERT INTO `herreria`.`productos`  (`id_producto`, `nombre`, `id_categoria`, `descripcion_p`, `precio`,  `foto`) VALUES (NULL, %s, %s, %s, %s, %s);" # Definimos la sentencia de creación del producto
+        datos=(_nombre,_id_categoria,_descripcion_p,_precio , _costo_envio, _largo, _alto, _ancho, nuevoNombreFoto) # Definimos los valores del producto
+        sql="INSERT INTO `herreria`.`productos`  (`id_producto`, `nombre`, `id_categoria`, `descripcion_p`, `precio`, `costo_envio`, `largo`, `alto`, `ancho`, `foto`) VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s);" # Definimos la sentencia de creación del producto
         conn=mysql.connect() # Abrimos la conexión con la DB
         cursor=conn.cursor()
         cursor.execute(sql,datos) # Gurdamos en la DB el producto

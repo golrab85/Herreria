@@ -6,7 +6,7 @@
 }
 
 body{
-    background-image: url("/static/img/fondo2.jpg");
+    background-image: url("/static/img/background.jpg");
     background-blend-mode: color-burn;
     background-color: #f18d8d;
     min-height: 100%;
@@ -18,9 +18,12 @@ header {
     background-size: 100%;
     aspect-ratio: 4.5;
     color:#aad0e8;
-    text-decoration-line: underline;
     font-size: 3VW;
     font-family: 'inconsolata';
+}
+
+header h1{
+    text-decoration-line: underline;
 }
 
 #whatsapp{
@@ -66,7 +69,7 @@ button:hover{
 p{
     font-family: 'monserrat';
     color: rgb(46, 2, 42);
-    font-size: 2vw;
+    font-size: 1rem;
     padding: 4vw;
 }
 
@@ -84,7 +87,7 @@ p{
 footer{
     background-color: rgb(10, 3, 6);
     text-align: right;
-    margin-top: inherit;
+    padding-right: 5%;
 }
 footer h1{
     display: inline-block;
@@ -108,7 +111,6 @@ table{
     width: 90%;
     border-collapse: collapse;
     border: 5px solid;
-    
 }
 
 th{
@@ -120,7 +122,7 @@ th{
 td{
     border: black solid;
     border-width: 1px ;
-    padding: 1vw;
+    padding: .8vw;
     font-size: 1.5vw;
 }
 
@@ -128,7 +130,7 @@ td{
     font-size: 1.5vw;
     font-weight: 600;
     margin-top: 2vw;
-    margin-bottom: -1vw;
+    /* margin-bottom: -1vw; */
 }
 
 .mapa{
@@ -169,6 +171,14 @@ input, textarea{
     max-width: 40vw;
 }
 
+.header2{
+    text-align: left;
+    /* text-decoration: none; */
+    margin-left: 25%;
+    margin-top: 2vw;
+    color: gold;
+}
+
 form div{
     border: black dotted 2px;
     /* background-color: blue; */
@@ -181,6 +191,13 @@ form div{
     vertical-align: middle;
 }
 
+.estrella{
+    width: 1.5vw;
+}
+#cerrar{
+    background-color: firebrick;
+    color: floralwhite;
+}
 [type="submit"]{
     background-color: rgb(131, 187, 240);
 }

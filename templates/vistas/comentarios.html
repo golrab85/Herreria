@@ -1,18 +1,7 @@
 {% extends "/vistas/base.html" %}
 
 {% block titulo %}comentarios{% endblock %}
-{% block head %}
-<script>
-    function desplegar(id) {
-        var x = document.getElementById(id);
-        if (x.style.display === "none") {
-            x.style.display = "block";
-        } else {
-            x.style.display = "none";
-        }
-    }
-</script>
-{% endblock %}
+
 {% block header %}
 COMENTARIOS
 {% endblock %}
@@ -151,9 +140,15 @@ COMENTARIOS
             {% for calificacion in calificaciones %}
             <tr>
                 <td>{{calificacion[2] }}</td>
-                <td>{{calificacion[3] }}</td>
-                <td>{{calificacion[4] }}</td>
-                <td>{{calificacion[5] }}</td>
+                <td>{% for i in calificacion[3] %}
+                <img class="estrella" src="/static/img/estrella.svg" alt="*">
+                {% endfor %}    </td>
+                <td>{% for i in calificacion[4] %}
+                <img class="estrella" src="/static/img/estrella.svg" alt="*">
+                {% endfor %}    </td>
+                <td>{% for i in calificacion[5] %}
+                <img class="estrella" src="/static/img/estrella.svg" alt="*">
+                {% endfor %}    </td>
                 <td>{{calificacion[6] }}</td>
             </tr>
             {% endfor %}
