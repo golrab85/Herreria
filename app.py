@@ -1,4 +1,4 @@
-from flask import Flask,app,config,render_template,request,redirect,flash,url_for,session
+from flask import Flask,app,render_template,request,redirect,flash,url_for,session
 from flask.sessions import SessionInterface
 from flaskext.mysql import MySQL
 from datetime import datetime
